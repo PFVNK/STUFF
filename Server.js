@@ -34,7 +34,7 @@ function getResults(body) {
     })
     return results
 }
-
+    
 app.get('/', (req, res) => {
     res.json({
         message: 'hell world'
