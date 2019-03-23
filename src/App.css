@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'definately_mayberegular';
+  src: url("definitely_maybe-webfont.woff2") format("woff2"), url("definitely_maybe-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+.nav-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 15vh;
+  border-bottom: solid black; }
+  .nav-header button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: inherit;
+    border: none;
+    font-size: 1.5em; }
+  .nav-header .nav-logo {
+    font-family: 'definately_mayberegular';
+    position: absolute;
+    border: solid black;
+    background-color: white;
+    width: 14em;
+    height: 14em;
+    border-radius: 100%;
+    display: grid;
+    place-content: center;
+    z-index: 5;
+    border-top: 0px; }
+    .nav-header .nav-logo .nav-logo-title {
+      font-size: 4.5em; }
+  .nav-header .ReactTags__selected {
+    width: 35%;
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+  .nav-header .ReactTags__tag {
+    margin-right: 5px; }
+  .nav-header .ReactTags__remove {
+    margin-left: 1px; }
+  .nav-header .ReactTags__tagInput {
+    width: 50%;
+    float: right; }
+  .nav-header .ReactTags__tagInputField {
+    float: right; }
+
+.gallery-main {
+  position: relative;
+  height: 85vh;
+  padding-top: 10px;
+  background-color: antiquewhite; }
+
+.gallery-item {
+  border: solid 8px lightgreen;
+  height: 20vh;
+  width: 20vw;
+  margin-bottom: 10px; }
