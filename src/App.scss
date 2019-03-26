@@ -38,13 +38,16 @@
     }
     .ReactTags__selected {
         // border: solid red;
-        width: 35%;
+        width: 30%;
         position: absolute;
         bottom: 0;
         right: 0;
+        margin-right: 2em;
+        margin-bottom: .5em;
     }
     .ReactTags__tag {
         margin-right: 5px;
+        font-family: 'Special Elite', cursive;
     }
     .ReactTags__remove {
         margin-left: 1px;
@@ -60,15 +63,36 @@
 
 .gallery-main {
     position: relative;
-    height: 85vh;
-    padding-top: 10px;
-    background-color: antiquewhite;
+    min-height: 100vh;
+    padding-top: 130px;
+    background-color:  	 	 	#001000;
+    background-image: url(brickback.jpg)
     // border:solid purple;
 }
 
+.gallery-item-wrap {
+  padding: 2rem;
+  position: relative;
+  background: linear-gradient(to right, #a8ff78
+, #78ffd6);
+  padding: 6px;
+}
+
 .gallery-item {
-    border: solid 8px lightgreen;
-    height: 20vh;
-    width: 20vw;
-    margin-bottom: 10px;
+  display: grid; 
+  background: #222;
+  color: white;
+  font-family: 'Special Elite', cursive;
+  padding: 1rem;
+  .gallery-img {
+    width: 100%;
+    max-height: 270px;;
+  }
+}
+
+.gallery-spinner{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
