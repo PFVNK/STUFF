@@ -26,15 +26,19 @@ function getResults(body) {
                 return `https://images.craigslist.org/${id.split(':')[1]}_300x300.jpg`
             })
         }
+        const hood = result.find('.result-hood').text().trim().replace("(", "").replace(")", "")
+
+
         results.push({
             title,
             price,
-            images
+            images,
+            hood
         })
     })
     return results
 }
-    
+
 app.get('/', (req, res) => {
     res.json({
         message: 'hell world'
@@ -44,7 +48,7 @@ app.get('/', (req, res) => {
 app.get('/search/:location/:search_term', (req, res) => {
     const { location, search_term } = req.params
 
-    const url = `https://${location}.craigslist.org/search/sss?sort=date&query=${search_term}`
+    const url = `https://${location}.craigslist.org/search/sso?sort=date&query=${search_term}&hasPic=1`
 
     fetch(url)
         .then(res => res.text())
