@@ -28,12 +28,14 @@ function getResults(body) {
         }
         const hood = result.find('.result-hood').text().trim().replace("(", "").replace(")", "")
 
+        let url = result.find('.result-title.hdrlnk').attr('href')
 
         results.push({
             title,
             price,
             images,
-            hood
+            hood,
+            url
         })
     })
     return results
