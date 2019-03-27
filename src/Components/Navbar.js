@@ -21,7 +21,6 @@ class Navbar extends Component {
                     />
                 </header>
             </React.Fragment>
-
         )
     }
 }
