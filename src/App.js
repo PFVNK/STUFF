@@ -18,8 +18,11 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [],
-      tagResults: []
+      tags: [{
+        id: '',
+        text: ''
+      }],
+      tagResults: null
     }
 
     this.saveToLocal = this.saveToLocal.bind(this)
@@ -27,27 +30,28 @@ class App extends Component {
     this.handleAddition = this.handleAddition.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.fetchAndStore = this.fetchAndStore.bind(this)
+    this.fetchSave = this.fetchSave.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let tags = JSON.parse(localStorage.getItem('tags'))
     this.setState({
       tags
     },
-      this.fetchAndStore
+      await this.fetchAndStore
     )
   }
 
-  componentDidUpdate() {
-    console.log(this.state.tagResults)
-    console.log(this.state.tags)
+  fetchSave = () => {
+    this.saveToLocal()
+    this.fetchAndStore()
   }
 
   saveToLocal() {
     localStorage.setItem('tags', JSON.stringify(this.state.tags))
   }
 
-  async fetchAndStore() {
+  fetchAndStore() {
     let tagString = []
 
     this.state.tags.map((x, index) => {
@@ -55,25 +59,27 @@ class App extends Component {
     })
 
     const url = `${API_URL}${tagString.join('').slice(2, -1)}`
-    console.log(url)
-    await fetch(url)
+
+    fetch(url)
       .then(response => response.json())
-      .then(json => this.setState({ tagResults: json.results }))
+      .then(json => this.setState({ tagResults: json.results || [] }))
   }
 
-  handleDelete(i) {
+  async handleDelete(i) {
     const { tags } = this.state;
     this.setState(
       { tags: tags.filter((tag, index) => index !== i) },
-      this.saveToLocal,
-      this.fetchAndStore
+      () => {
+        this.fetchSave()
+      }
     );
   }
 
-  handleAddition(tag) {
+  async handleAddition(tag) {
     this.setState({ tags: [...this.state.tags, tag] },
-      this.saveToLocal,
-      this.fetchAndStore
+      () => {
+        this.fetchSave()
+      }
     );
   }
 
