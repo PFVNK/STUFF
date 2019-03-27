@@ -21,9 +21,8 @@ class Gallery extends Component {
 
     render() {
         return (
-
             <div className='gallery-main'>
-                {this.state.isLoading ?
+                {this.state.isLoading && this.props.tagResults !== true ?
                     <Loader
                         style={'gallery-spinner'}
                         type="Grid"
@@ -37,16 +36,14 @@ class Gallery extends Component {
                         monitorImagesLoaded={true}
                         gutterHeight={9}
                         gutterWidth={7}>
-                        {this.props.tagResults.map((x, index) => <div className='gallery-item-wrap'><div key={index} className='gallery-item'>
-                            <img className='gallery-img' src={x.images[0]} alt={x.title} />
-                            <h2>{x.title}</h2>
+                        {this.props.tagResults.map((x, index) => <div key={index} className='gallery-item-wrap'><div key={index} className='gallery-item'>
+                            <a href={x.url} target='_blank'><img className='gallery-img' src={x.images[0]} alt={x.title} /></a>
+                            <a href={x.url} target='_blank'><h2>{x.title}</h2></a>
                             <h3>PRICE: {x.price}</h3>
                             <p>LOCATION: {x.hood}</p>
                         </div></div>)}
-                    </StackGrid>
-                }
+                    </StackGrid>}
             </div>
-
         )
     }
 }
