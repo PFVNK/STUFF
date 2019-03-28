@@ -16,7 +16,7 @@ class Gallery extends Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({ isLoading: false })
-        }, 7000)
+        }, 3000)
     }
 
     render() {
@@ -32,6 +32,7 @@ class Gallery extends Component {
                     />
                     :
                     <StackGrid
+                        className='gallery-grid'
                         columnWidth={330}
                         monitorImagesLoaded={true}
                         gutterHeight={9}
