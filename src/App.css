@@ -5,10 +5,13 @@
   font-style: normal; }
 
 .nav-header {
-  position: relative;
+  position: fixed;
+  z-index: 5;
   display: flex;
   justify-content: center;
   height: 15vh;
+  width: 100vw;
+  background-color: white;
   border-bottom: solid black; }
   .nav-header button {
     position: absolute;
@@ -19,7 +22,7 @@
     font-size: 1.5em; }
   .nav-header .nav-logo {
     font-family: 'definately_mayberegular';
-    position: absolute;
+    position: fixed;
     border: solid black;
     background-color: white;
     width: 14em;
@@ -52,9 +55,15 @@
 .gallery-main {
   position: relative;
   min-height: 100vh;
+  width: 100vw;
   padding-top: 130px;
   background-color: #001000;
-  background-image: url(brickback.jpg); }
+  background-image: url(brickback.jpg);
+  background-attachment: fixed; }
+
+.gallery-grid {
+  position: absolute;
+  margin-top: 8em; }
 
 .gallery-item-wrap {
   padding: 2rem;
@@ -64,10 +73,11 @@
 
 .gallery-item {
   display: grid;
-  background: #222;
+  background: #080808;
   color: white;
   font-family: 'Special Elite', cursive;
-  padding: 1rem; }
+  padding: 1rem;
+  overflow: hidden; }
   .gallery-item .gallery-img {
     width: 100%;
     max-height: 270px; }
