@@ -33,12 +33,12 @@ class App extends Component {
     this.fetchSave = this.fetchSave.bind(this)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     let tags = JSON.parse(localStorage.getItem('tags'))
     this.setState({
       tags
     },
-      await this.fetchAndStore
+      this.fetchAndStore
     )
   }
 
@@ -65,7 +65,7 @@ class App extends Component {
       .then(json => this.setState({ tagResults: json.results || [] }))
   }
 
-  async handleDelete(i) {
+  handleDelete(i) {
     const { tags } = this.state;
     this.setState(
       { tags: tags.filter((tag, index) => index !== i) },
@@ -75,7 +75,7 @@ class App extends Component {
     );
   }
 
-  async handleAddition(tag) {
+  handleAddition(tag) {
     this.setState({ tags: [...this.state.tags, tag] },
       () => {
         this.fetchSave()
