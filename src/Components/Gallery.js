@@ -31,6 +31,7 @@ class Gallery extends Component {
                         width="200"
                     />
                     :
+
                     <StackGrid
                         className='gallery-grid'
                         columnWidth={330}
@@ -38,8 +39,8 @@ class Gallery extends Component {
                         gutterHeight={9}
                         gutterWidth={7}>
                         {this.props.tagResults.map((x, index) => <div key={index} className='gallery-item-wrap'><div key={index} className='gallery-item'>
-                            <a href={x.url} target='_blank'><img className='gallery-img' src={x.images[0]} alt={x.title} /></a>
-                            <a href={x.url} target='_blank'><h2>{x.title}</h2></a>
+                            <a href={x.url} target='_blank' rel="noopener noreferrer"><img className='gallery-img' src={x.images} alt={x.title} /></a>
+                            <a href={x.url} target='_blank' rel="noopener noreferrer"><h2>{x.title}</h2></a>
                             <h3>PRICE: {x.price}</h3>
                             <p>LOCATION: {x.hood}</p>
                         </div></div>)}
