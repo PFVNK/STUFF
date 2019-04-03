@@ -15,7 +15,6 @@ class AddTag extends React.Component {
                     handleDrag={this.props.handleDrag}
                     delimiters={this.props.delimiters}
                     placeholder='+/- Tags'
-                    inline={false}
                     inputFieldPosition='top' />
             </div>
         )
