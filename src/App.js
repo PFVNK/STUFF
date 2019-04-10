@@ -5,6 +5,7 @@ import Gallery from './Components/Gallery'
 import './App.css';
 
 
+
 const KeyCodes = {
   comma: 188,
   enter: 13,
@@ -18,11 +19,17 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [{
-        id: '',
-        text: ''
-      }],
-      tagResults: null
+      tags: [
+        {
+          id: 'bobblehead',
+          text: 'bobblehead',
+        },
+        {
+          id: 'tea',
+          text: 'tea'
+        }
+      ],
+      tagResults: []
     }
 
     this.saveToLocal = this.saveToLocal.bind(this)
@@ -42,6 +49,10 @@ class App extends Component {
     )
   }
 
+  componentDidUpdate() {
+    console.log(this.state.tagResults)
+  }
+
   fetchSave = () => {
     this.saveToLocal()
     this.fetchAndStore()
@@ -53,16 +64,22 @@ class App extends Component {
 
   fetchAndStore() {
     let tagString = []
+    let offerTag = this.state.tags[0].text || []
 
-    this.state.tags.map((x, index) => {
+    this.state.tags.map((x, index) =>
       tagString.push(`|+${x.text}+`)
-    })
+    )
 
-    const url = `${API_URL}${tagString.join('').slice(2, -1)}`
+    const urls = [
+      `${API_URL}${tagString.join('').slice(2, -1)}`,
+      `${API_URL}${offerTag}`
+    ]
 
-    fetch(url)
-      .then(response => response.json())
-      .then(json => this.setState({ tagResults: json.results || [] }))
+    Promise.all(urls.map(url =>
+      fetch(url)
+        .then(response => response.json())
+    ))
+      .then(json => this.setState({ tagResults: json[1].allResults || [] }))
   }
 
   handleDelete(i) {
@@ -95,7 +112,7 @@ class App extends Component {
   }
 
   render() {
-    const { tags, tagResults } = this.state;
+    const { tags, tagResults, craigResults, offerResults, finalResults } = this.state;
     return (
       <div className="App">
         <Navbar
@@ -108,6 +125,9 @@ class App extends Component {
         <Gallery
           tags={tags}
           tagResults={tagResults}
+          craigResults={craigResults}
+          offerResults={offerResults}
+          finalResults={finalResults}
         />
       </div>
     );
