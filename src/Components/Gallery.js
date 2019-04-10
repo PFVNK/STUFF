@@ -15,7 +15,9 @@ class Gallery extends Component {
 
     componentDidMount() {
         setTimeout(() => {
-            this.setState({ isLoading: false })
+            this.setState({
+                isLoading: false
+            })
         }, 3000)
     }
 
