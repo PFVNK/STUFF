@@ -12,6 +12,7 @@ app.use(morgan('tiny'))
 function getResults(body) {
     const $ = cheerio.load(body)
     const rows = $('li.result-row')
+    const offerRows = $('._b31be13')
     const results = []
 
     rows.each((index, element) => {
@@ -38,6 +39,21 @@ function getResults(body) {
             url
         })
     })
+
+    offerRows.each((index, element) => {
+        const offerResult = $(element)
+        const title = offerResult.find('._nn5xny4._y9ev9r').text()
+        const images = offerResult.find('img._ipfql6._sheya5').attr('data-src')
+        const price = offerResult.find('._s3g03e4').text()
+        const hood = offerResult.find('._19rx43s2').text()
+
+        results.push({
+            title,
+            images,
+            price,
+            hood
+        })
+    })
     return results
 }
 
@@ -47,18 +63,28 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/search/:location/:search_term', (req, res) => {
+app.get('/search/:location/:search_term', async (req, res) => {
     const { location, search_term } = req.params
 
+    allResults = []
+
+    const offerUrl = `https://offerup.com/search/?q=${search_term}`
     const url = `https://${location}.craigslist.org/search/sso?sort=date&query=${search_term}&hasPic=1`
 
-    fetch(url)
+    fetch(offerUrl)
         .then(res => res.text())
         .then(body => {
             const results = getResults(body)
-            res.json({
-                results
-            })
+            allResults.push.apply(allResults, results)
+            return fetch(url)
+        })
+        .then(res => res.text())
+        .catch(err => console.log(err))
+        .then(body => {
+            const results = getResults(body)
+            allResults.push.apply(allResults, results)
+            console.log(allResults)
+            res.json({ allResults })
         })
 })
 
