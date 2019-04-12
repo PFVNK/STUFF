@@ -19,17 +19,10 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [
-        {
-          id: 'bobblehead',
-          text: 'bobblehead',
-        },
-        {
-          id: 'tea',
-          text: 'tea'
-        }
-      ],
-      tagResults: []
+      tags: [],
+      tagResults: [],
+      items: [],
+      showItems: 0
     }
 
     this.saveToLocal = this.saveToLocal.bind(this)
@@ -38,24 +31,56 @@ class App extends Component {
     this.handleDrag = this.handleDrag.bind(this);
     this.fetchAndStore = this.fetchAndStore.bind(this)
     this.fetchSave = this.fetchSave.bind(this)
+    this.lazyLoad = this.lazyLoad.bind(this)
+    this.shuffle = this.shuffle.bind(this)
   }
 
   componentDidMount() {
     let tags = JSON.parse(localStorage.getItem('tags'))
+
+    setTimeout(this.lazyLoad, 2000)
+
     this.setState({
       tags
     },
       this.fetchAndStore
     )
+
   }
 
   componentDidUpdate() {
     console.log(this.state.tagResults)
+    console.log(this.state.items)
   }
 
   fetchSave = () => {
     this.saveToLocal()
     this.fetchAndStore()
+  }
+
+  lazyLoad() {
+    const randomItems = this.shuffle(this.state.tagResults)
+    const items = randomItems.slice(0, this.state.showItems + 12)
+    this.setState({
+      showItems: this.state.showItems + 12,
+      items
+    })
+  }
+
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex
+
+    while (0 !== currentIndex) {
+
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
+
+      temporaryValue = array[currentIndex]
+      array[currentIndex] = array[randomIndex]
+      array[randomIndex] = temporaryValue
+    }
+
+    return array
   }
 
   saveToLocal() {
@@ -112,7 +137,7 @@ class App extends Component {
   }
 
   render() {
-    const { tags, tagResults, craigResults, offerResults, finalResults } = this.state;
+    const { tags, tagResults, items } = this.state;
     return (
       <div className="App">
         <Navbar
@@ -124,10 +149,9 @@ class App extends Component {
         />
         <Gallery
           tags={tags}
+          lazyLoad={this.lazyLoad}
           tagResults={tagResults}
-          craigResults={craigResults}
-          offerResults={offerResults}
-          finalResults={finalResults}
+          items={items}
         />
       </div>
     );
