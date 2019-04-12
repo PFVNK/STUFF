@@ -34,7 +34,7 @@ function getResults(body) {
         results.push({
             title,
             price,
-            images,
+            images: images[0],
             hood,
             url
         })
