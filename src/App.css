@@ -16,9 +16,8 @@
   .nav-header button {
     position: absolute;
     bottom: 0;
-    right: 0;
+    left: 0;
     background-color: inherit;
-    border: none;
     font-size: 1.5em; }
   .nav-header .nav-logo {
     font-family: 'definately_mayberegular';
@@ -119,16 +118,37 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 .gallery-main {
   position: relative;
+  /* text-align: center; */
   min-height: 100vh;
   width: 100vw;
   padding-top: 130px;
+  padding-bottom: 50px;
   background-color: #001000;
   background-image: url(brickback.jpg);
   background-attachment: fixed; }
 
 .gallery-grid {
   position: absolute;
-  margin-top: 8em; }
+  margin-top: 8em; 
+  margin-bottom: 50px;
+}
+
+.gallery-button {
+    margin: 0 auto;
+  display: block;
+  height: 90px;
+  width: 500px;;
+  background: transparent;
+  border: solid 1px black;
+  font-family: 'Special Elite', cursive;
+  font-size: 2.5em;
+  cursor: pointer;
+}
+
+.gallery-stuff-text {
+      font-family: 'definately_mayberegular';
+      font-size: 1.5em;
+}
 
 .gallery-item-wrap {
   padding: 2rem;
