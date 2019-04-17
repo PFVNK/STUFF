@@ -4,6 +4,10 @@
   font-weight: normal;
   font-style: normal; }
 
+html {
+  overflow-x: hidden;
+}  
+
 .nav-header {
   position: fixed;
   z-index: 5;
@@ -52,6 +56,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
+    z-index: 1000;
     margin-bottom: .5em;
     margin-right: 2.5em; }
 
@@ -165,14 +170,14 @@ Note: Beware of modifying this element as it can break the animations - you shou
   overflow: hidden; }
   .gallery-item .gallery-img {
     width: 100%;
-    max-height: 270px; }
+    min-height: 280px; }
   .gallery-item a {
     color: white;
     text-decoration-line: none; }
 
 .gallery-spinner {
-  position: absolute;
-  top: 40%;
+  position: fixed;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%); }
 
