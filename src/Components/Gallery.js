@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import StackGrid from 'react-stack-grid'
 import Loader from 'react-loader-spinner'
-import LazyLoad from 'react-lazyload';
+import BottomScrollListener from 'react-bottom-scroll-listener'
 
 
 import '../App.css';
@@ -13,6 +13,7 @@ class Gallery extends Component {
         this.state = {
             isLoading: true
         }
+        this.handleScroll = this.handleScroll.bind(this)
     }
 
     componentDidMount() {
@@ -23,6 +24,11 @@ class Gallery extends Component {
         }, 3000)
     }
 
+    handleScroll = (e) => {
+        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+        if (bottom) { this.props.lazyLoad() }
+    }
+
     render() {
         return (
             <>
@@ -31,26 +37,28 @@ class Gallery extends Component {
                         <Loader
                             style={'gallery-spinner'}
                             type="Grid"
-                            color="lightgreen"
+                            color="#a8ff78"
                             height="200"
                             width="200"
                         />
                         :
-                        
-                        <StackGrid
-                            className='gallery-grid'
-                            columnWidth={330}
-                            monitorImagesLoaded={true}
-                            gutterHeight={9}
-                            gutterWidth={7}>
-                            {this.props.items.map((x, index) => <div key={index} className='gallery-item-wrap'><div key={index} className='gallery-item'>
-                                <a href={x.url} target='_blank' rel="noopener noreferrer"><img className='gallery-img' src={x.images} alt={x.title} /></a>
-                                <a href={x.url} target='_blank' rel="noopener noreferrer"><h2>{x.title}</h2></a>
-                                <h3>PRICE: {x.price}</h3>
-                                <p>LOCATION: {x.hood}</p>
-                            </div></div>)}
-                        </StackGrid>}
-                    <button className='gallery-button' onClick={this.props.lazyLoad}>Show More <span className='gallery-stuff-text'>STUFF</span></button>
+                        <div>
+                            <StackGrid
+                                className='gallery-grid'
+                                columnWidth={330}
+                                monitorImagesLoaded={true}
+                                gutterHeight={9}
+                                gutterWidth={7}>
+                                {this.props.items.map((x, index) => <div key={index} className='gallery-item-wrap'><div key={index} className='gallery-item'>
+                                    <a href={x.url} target='_blank' rel="noopener noreferrer"><img className='gallery-img' src={x.images} alt={x.title} /></a>
+                                    <a href={x.url} target='_blank' rel="noopener noreferrer"><h2>{x.title}</h2></a>
+                                    <h3>PRICE: {x.price}</h3>
+                                    <p>LOCATION: {x.hood}</p>
+                                </div></div>)}
+                            </StackGrid>
+                            <BottomScrollListener onBottom={this.props.lazyLoad} offset={300} />
+                        </div>
+                    }
                 </div>
             </>
         )
