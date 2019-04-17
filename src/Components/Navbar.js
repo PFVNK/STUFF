@@ -4,7 +4,7 @@ import MediaQuery from 'react-responsive'
 
 import AddTag from './AddTag'
 
-import '../App.css';
+import '../App.css'
 
 class Navbar extends Component {
 
