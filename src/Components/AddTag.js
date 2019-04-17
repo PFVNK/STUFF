@@ -1,7 +1,7 @@
 import React from 'react';
-import { WithContext as ReactTags } from 'react-tag-input';
+import { WithContext as ReactTags } from 'react-tag-input'
 
-import '../App.css';
+import '../App.css'
 
 
 class AddTag extends React.Component {
