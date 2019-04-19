@@ -12,7 +12,7 @@ app.use(morgan('tiny'))
 function getResults(body) {
     const $ = cheerio.load(body)
     const rows = $('li.result-row')
-    const offerRows = $('._b31be13')
+    const offerRows = $('a._109rpto._1anrh0x')
     const results = []
 
     rows.each((index, element) => {
@@ -31,7 +31,10 @@ function getResults(body) {
 
         let url = result.find('.result-title.hdrlnk').attr('href')
 
+        const id = index
+
         results.push({
+            id,
             title,
             price,
             images: images[0],
@@ -47,21 +50,21 @@ function getResults(body) {
         const price = offerResult.find('._s3g03e4').text()
         const hood = offerResult.find('._19rx43s2').text()
 
+        let url = `https://offerup.com/${offerResult.attr('href')}`
+
+        const id = index
+
         results.push({
+            id,
             title,
             images,
             price,
-            hood
+            hood,
+            url
         })
     })
     return results
 }
-
-app.get('/', (req, res) => {
-    res.json({
-        message: 'hell world'
-    })
-})
 
 app.get('/search/:location/:search_term', async (req, res) => {
     const { location, search_term } = req.params
@@ -83,7 +86,6 @@ app.get('/search/:location/:search_term', async (req, res) => {
         .then(body => {
             const results = getResults(body)
             allResults.push.apply(allResults, results)
-            console.log(allResults)
             res.json({ allResults })
         })
 })
