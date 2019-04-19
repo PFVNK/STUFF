@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import $ from 'jquery'
+import Push from 'push.js'
 
 import Navbar from './Components/Navbar'
 import Gallery from './Components/Gallery'
@@ -23,7 +23,7 @@ class App extends Component {
       tagResults: [],
       mixedResults: [],
       items: [],
-      showItems: 0
+      itemCount: 0
     }
 
     this.saveToLocal = this.saveToLocal.bind(this)
@@ -42,16 +42,30 @@ class App extends Component {
 
     setTimeout(this.lazyLoad, 2000)
 
-    this.setState({
-      tags
-    },
+    this.setState({ tags },
       this.fetchAndStore
     )
+
+    setInterval(this.fetchSave, 3600000)
   }
 
-  componentDidUpdate() {
-    console.log(this.state.tagResults)
-    console.log(this.state.items)
+  componentDidUpdate(prevProps, prevState) {
+    let prevMixedResults = prevState.mixedResults.length
+    let mixedResults = this.state.mixedResults.length
+    console.log(prevMixedResults)
+    console.log(mixedResults)
+
+    if (prevMixedResults !== mixedResults) {
+      let resultDiff = (prevMixedResults > mixedResults) ? prevMixedResults - mixedResults : mixedResults - prevMixedResults
+
+      Push.create(`You have ${resultDiff} new items to view!`, {
+        requireInteraction: 'true',
+        onClick: function () {
+          window.focus()
+          this.close()
+        }
+      })
+    } else { return }
   }
 
   fetchSave = () => {
@@ -62,9 +76,9 @@ class App extends Component {
 
   lazyLoad() {
     const { mixedResults } = this.state
-    const items = mixedResults.slice(0, this.state.showItems + 12)
+    const items = mixedResults.slice(0, this.state.itemCount + 12)
     this.setState({
-      showItems: this.state.showItems + 12,
+      itemCount: this.state.itemCount + 12,
       items
     })
   }
@@ -94,7 +108,7 @@ class App extends Component {
       }
       return unique
     }, [])
-    console.log(uniqueResults)
+
     const mixedResults = this.shuffle(uniqueResults)
 
     this.setState({ mixedResults })
