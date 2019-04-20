@@ -33,11 +33,11 @@ class App extends Component {
     this.fetchAndStore = this.fetchAndStore.bind(this)
     this.fetchSave = this.fetchSave.bind(this)
     this.lazyLoad = this.lazyLoad.bind(this)
-    this.shuffle = this.shuffle.bind(this)
     this.mixResults = this.mixResults.bind(this)
   }
 
   componentDidMount() {
+    console.log('componentdidmount')
     let tags = JSON.parse(localStorage.getItem('tags'))
 
     setTimeout(this.lazyLoad, 2000)
@@ -50,6 +50,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('componentdidupdate')
+    console.log(this.state.tagResults)
+    console.log(this.state.mixedResults)
+    console.log(this.state.items)
     let prevMixedResults = prevState.mixedResults.length
     let mixedResults = this.state.mixedResults.length
     console.log(prevMixedResults)
@@ -69,12 +73,14 @@ class App extends Component {
   }
 
   fetchSave = () => {
+    console.log('fetchsave')
     this.saveToLocal()
     this.fetchAndStore()
     this.lazyLoad()
   }
 
   lazyLoad() {
+    console.log('lazyload')
     const { mixedResults } = this.state
     const items = mixedResults.slice(0, this.state.itemCount + 12)
     this.setState({
@@ -83,23 +89,8 @@ class App extends Component {
     })
   }
 
-  shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex
-
-    while (0 !== currentIndex) {
-
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex -= 1
-
-      temporaryValue = array[currentIndex]
-      array[currentIndex] = array[randomIndex]
-      array[randomIndex] = temporaryValue
-    }
-
-    return array
-  }
-
   mixResults() {
+    console.log('mixresults')
     const { tagResults } = this.state
 
     let uniqueResults = tagResults.reduce((unique, o) => {
@@ -109,7 +100,10 @@ class App extends Component {
       return unique
     }, [])
 
-    const mixedResults = this.shuffle(uniqueResults)
+
+    const mixedResults = uniqueResults.sort((a, b) => {
+      return a.id - b.id || a.title.localeCompare(b.title)
+    })
 
     this.setState({ mixedResults })
   }
@@ -119,6 +113,7 @@ class App extends Component {
   }
 
   fetchAndStore() {
+    console.log('fetchandstore')
     let tagString = []
     let offerTag = this.state.tags[0].text || []
     let data = []
