@@ -28,10 +28,9 @@ function getResults(body) {
             })
         }
         const hood = result.find('.result-hood').text().trim().replace("(", "").replace(")", "")
-
         let url = result.find('.result-title.hdrlnk').attr('href')
-
         const id = index
+        const dateAdded = result.find('.result-date').attr('datetime').slice(0, 10)
 
         results.push({
             id,
@@ -39,7 +38,8 @@ function getResults(body) {
             price,
             images: images[0],
             hood,
-            url
+            url,
+            dateAdded
         })
     })
 
@@ -71,7 +71,7 @@ app.get('/search/:location/:search_term', async (req, res) => {
 
     allResults = []
 
-    const offerUrl = `https://offerup.com/search/?q=${search_term}`
+    const offerUrl = `https://offerup.com/search/?q=${search_term}&sort=-posted`
     const url = `https://${location}.craigslist.org/search/sso?sort=date&query=${search_term}&hasPic=1`
 
     fetch(offerUrl)
