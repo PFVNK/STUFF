@@ -17,6 +17,10 @@
     "react-stack-grid": "^0.7.1",
     "react-tag-input": "^6.4.0"
   },
+  "engines": {
+    "npm": "6.5.0",
+    "node": "8.11.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
