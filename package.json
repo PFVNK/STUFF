@@ -1,7 +1,6 @@
 {
   "name": "mystuff",
   "version": "0.1.0",
-  "main": "server.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.5",
