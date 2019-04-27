@@ -104,8 +104,6 @@ app.use((err, req, res, next) => {
   })
 })
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-
 if (process.env.NODE_ENV === 'production') {
   //Set static folder
   app.use(express.static('client/build'))
