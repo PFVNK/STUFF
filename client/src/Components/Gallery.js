@@ -13,7 +13,6 @@ class Gallery extends Component {
         this.state = {
             isLoading: true
         }
-        this.handleScroll = this.handleScroll.bind(this)
     }
 
     componentDidMount() {
@@ -24,10 +23,6 @@ class Gallery extends Component {
         }, 3000)
     }
 
-    handleScroll = (e) => {
-        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-        if (bottom) { this.props.lazyLoad() }
-    }
 
     render() {
         return (
