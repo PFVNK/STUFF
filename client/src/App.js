@@ -32,15 +32,17 @@ class App extends Component {
     this.handleDrag = this.handleDrag.bind(this)
     this.fetchAndStore = this.fetchAndStore.bind(this)
     this.fetchSave = this.fetchSave.bind(this)
+    this.deleteSave = this.deleteSave.bind(this)
     this.lazyLoad = this.lazyLoad.bind(this)
     this.mixResults = this.mixResults.bind(this)
   }
 
   componentDidMount() {
-    console.log('componentdidmount')
     let tags = JSON.parse(localStorage.getItem('tags'))
 
-    setTimeout(this.lazyLoad, 2000)
+    if (tags.length > 0) {
+      setTimeout(this.lazyLoad, 3000)
+    }
 
     this.setState({ tags },
       this.fetchAndStore
@@ -50,14 +52,8 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentdidupdate')
-    console.log(this.state.tagResults)
-    console.log(this.state.mixedResults)
-    console.log(this.state.items)
     let prevMixedResults = prevState.mixedResults.length
     let mixedResults = this.state.mixedResults.length
-    console.log(prevMixedResults)
-    console.log(mixedResults)
 
     if (prevMixedResults !== mixedResults) {
       let resultDiff = (prevMixedResults > mixedResults) ? prevMixedResults - mixedResults : mixedResults - prevMixedResults
@@ -70,27 +66,36 @@ class App extends Component {
         }
       })
     } else { return }
+
+    console.log(this.state.tags)
   }
 
   fetchSave = () => {
-    console.log('fetchsave')
     this.saveToLocal()
     this.fetchAndStore()
-    this.lazyLoad()
+    setTimeout(this.lazyLoad, 3000)
+  }
+
+  deleteSave = () => {
+    this.saveToLocal()
+    this.fetchAndStore()
+    setTimeout(this.lazyLoad, 2000)
+    console.log('deletesave')
   }
 
   lazyLoad() {
     console.log('lazyload')
     const { mixedResults } = this.state
-    const items = mixedResults.slice(0, this.state.itemCount + 12)
-    this.setState({
-      itemCount: this.state.itemCount + 12,
-      items
-    })
+    if (mixedResults.length > 0) {
+      const items = mixedResults.slice(0, this.state.itemCount + 12)
+      this.setState({
+        itemCount: this.state.itemCount + 12,
+        items
+      })
+    }
   }
 
   mixResults() {
-    console.log('mixresults')
     const { tagResults } = this.state
 
     let uniqueResults = tagResults.reduce((unique, o) => {
@@ -114,42 +119,52 @@ class App extends Component {
 
   fetchAndStore() {
     console.log('fetchandstore')
-    let tagString = []
-    let offerTag = this.state.tags[0].text || []
+    const { tags } = this.state
+    if (tags.length > 0) {
+      let tagString = []
+      let offerTag = !Array.isArray(tags) || !tags.length ? [] : this.state.tags[0].text
 
-    this.state.tags.map((x, index) =>
-      tagString.push(`|+${x.text}+`)
-    )
+      tags.map((x, index) =>
+        tagString.push(`|+${x.text}+`)
+      )
 
-    const urls = [
-      `${API_URL}${tagString.join('').slice(2, -1)}`,
-      `${API_URL}${offerTag}`
-    ]
+      const urls = [
+        `${API_URL}${tagString.join('').slice(2, -1)}`,
+        `${API_URL}${offerTag}`
+      ]
 
-    Promise.all(urls.map(url =>
-      fetch(url)
-        .then(response => response.json())
-    ))
-      .then(json => this.setState({ tagResults: json[0].allResults || [] }))
-      .then(this.mixResults)
+      Promise.all(urls.map(url =>
+        fetch(url)
+          .then(response => response.json())
+      ))
+        .then(json => this.setState({ tagResults: json[0].allResults || [] }))
+        .then(this.mixResults)
+    }
   }
 
   handleDelete(i) {
     const { tags } = this.state
     this.setState(
-      { tags: tags.filter((tag, index) => index !== i) },
+      {
+        tags: tags.filter((tag, index) => index !== i),
+        items: [],
+        itemCount: 0
+      },
       () => {
-        this.fetchSave()
+        console.log(this.state.tags)
+        this.deleteSave()
       }
     )
   }
 
   handleAddition(tag) {
-    this.setState({ tags: [...this.state.tags, tag] },
-      () => {
-        this.fetchSave()
-      }
-    )
+    if (this.state.tags.length < 3) {
+      this.setState({ tags: [...this.state.tags, tag] },
+        () => {
+          this.fetchSave()
+        }
+      )
+    }
   }
 
   handleDrag(tag, currPos, newPos) {
