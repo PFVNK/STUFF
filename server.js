@@ -67,7 +67,7 @@ function getResults(body) {
   return results
 }
 
-app.get('/search/:location/:search_term', async (req, res) => {
+app.get('/search/:location/:search_term', (req, res) => {
   const { location, search_term } = req.params
 
   allResults = []
