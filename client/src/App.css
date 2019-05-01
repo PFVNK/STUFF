@@ -53,7 +53,9 @@
     bottom: 0;
     right: 0;
     margin-bottom: .5em;
-    margin-right: 2.5em; }
+    margin-right: 2.5em; 
+    z-index: 10000;
+  }
 
 /* Position and sizing of burger button */
 .bm-burger-button {
