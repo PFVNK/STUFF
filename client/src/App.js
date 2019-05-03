@@ -67,6 +67,8 @@ class App extends Component {
       })
     } else { return }
 
+    window.scrollTo(0, 0)
+
     console.log(this.state.tags)
   }
 
