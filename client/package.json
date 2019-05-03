@@ -5,6 +5,7 @@
   "dependencies": {
     "push.js": "^1.0.9",
     "react": "^16.8.4",
+    "express": "^4.16.4",
     "react-bottom-scroll-listener": "^2.1.2",
     "react-burger-menu": "^2.6.5",
     "react-dnd": "^7.3.2",
