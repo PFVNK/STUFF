@@ -91,6 +91,19 @@ app.get('/search/:location/:search_term', (req, res) => {
     })
 })
 
+app.use((req, res, next) => {
+  const error = new Error('Not Found')
+  res.status(404)
+  next(error)
+})
+
+app.use((err, req, res, next) => {
+  res.status(res.statusCode || 500)
+  res.json({
+    message: err.message
+  })
+})
+
 app.use(express.static(path.join(__dirname, 'client/build')))
 
 if (process.env.NODE_ENV === 'production') {
