@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/build",
+  "homepage": "https://get-stuff.herokuapp.com",
   "dependencies": {
     "push.js": "^1.0.9",
     "react": "^16.8.4",
