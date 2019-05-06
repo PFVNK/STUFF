@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://get-stuff.herokuapp.com/",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "push.js": "^1.0.9",
     "react": "^16.8.4",
@@ -21,12 +27,6 @@
   "engines": {
     "npm": "6.5.0",
     "node": "8.11.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   },
   "browserslist": [
     ">0.2%",
