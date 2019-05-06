@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Push from 'push.js'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Navbar from './Components/Navbar'
 import Gallery from './Components/Gallery'
@@ -183,21 +184,29 @@ class App extends Component {
   render() {
     const { tags, tagResults, items } = this.state
     return (
-      <div className="App">
-        <Navbar
-          tags={tags}
-          handleDelete={this.handleDelete}
-          handleAddition={this.handleAddition}
-          handleDrag={this.handleDrag}
-          delimiters={delimiters}
-        />
-        <Gallery
-          tags={tags}
-          lazyLoad={this.lazyLoad}
-          tagResults={tagResults}
-          items={items}
-        />
-      </div>
+      <Router>
+        <div className="App">
+          <Route
+            path='/' exact
+            render={(props) => (<Navbar {...props}
+              tags={tags}
+              handleDelete={this.handleDelete}
+              handleAddition={this.handleAddition}
+              handleDrag={this.handleDrag}
+              delimiters={delimiters}
+            />)}
+          />
+          <Route
+            path='/' exact
+            render={(props) => (<Gallery {...props}
+            tags={tags}
+            lazyLoad={this.lazyLoad}
+            tagResults={tagResults}
+            items={items}
+          />)}
+          />
+        </div>
+      </Router>
     );
   }
 }

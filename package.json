@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "concurrently": "^3.6.1",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "concurrently": "^3.6.1",
     "morgan": "^1.9.1",
     "node-fetch": "^2.3.0"
   },
