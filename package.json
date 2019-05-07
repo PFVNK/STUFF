@@ -18,6 +18,10 @@
     "morgan": "^1.9.1",
     "node-fetch": "^2.3.0"
   },
+    "engines": {
+      "npm": "6.5.0",
+      "node": "8.11.1"
+    },
   "devDependencies": {
     "nodemon": "^1.18.10"
   },
