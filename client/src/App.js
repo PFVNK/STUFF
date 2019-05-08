@@ -20,7 +20,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [],
+      tags: [{ id: "bobblehead", text: "bobblehead" }],
       tagResults: [],
       mixedResults: [],
       items: [],
@@ -42,9 +42,9 @@ class App extends Component {
     let tags = JSON.parse(localStorage.getItem('tags'))
     console.log(typeof tags)
 
-    if (typeof tags !== null) {
-      setTimeout(this.lazyLoad, 3000)
-    }
+
+    setTimeout(this.lazyLoad, 3000)
+
 
     this.setState({ tags },
       this.fetchAndStore
