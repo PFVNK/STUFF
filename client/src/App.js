@@ -20,7 +20,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [],
+      tags: [{ id: "bobblehead", text: "bobblehead" }],
       tagResults: [],
       mixedResults: [],
       items: [],
@@ -199,11 +199,11 @@ class App extends Component {
           <Route
             path='/' exact
             render={(props) => (<Gallery {...props}
-            tags={tags}
-            lazyLoad={this.lazyLoad}
-            tagResults={tagResults}
-            items={items}
-          />)}
+              tags={tags}
+              lazyLoad={this.lazyLoad}
+              tagResults={tagResults}
+              items={items}
+            />)}
           />
         </div>
       </Router>
