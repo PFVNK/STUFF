@@ -42,7 +42,7 @@ class App extends Component {
     let tags = JSON.parse(localStorage.getItem('tags'))
     console.log(tags)
 
-    if (typeof tags !== 'null' && tags.length > 0) {
+    if (typeof tags !== null && tags.length > 0) {
       setTimeout(this.lazyLoad, 3000)
     }
 
