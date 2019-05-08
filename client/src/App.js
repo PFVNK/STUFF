@@ -40,8 +40,9 @@ class App extends Component {
 
   componentDidMount() {
     let tags = JSON.parse(localStorage.getItem('tags'))
+    console.log(tags)
 
-    if (tags.length > 0) {
+    if (typeof tags !== 'null' && tags.length > 0) {
       setTimeout(this.lazyLoad, 3000)
     }
 
@@ -121,7 +122,6 @@ class App extends Component {
   }
 
   fetchAndStore() {
-    console.log('fetchandstore')
     const { tags } = this.state
     if (tags.length > 0) {
       let tagString = []
