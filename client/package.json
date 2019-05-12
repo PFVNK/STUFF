@@ -26,8 +26,8 @@
     "react-tag-input": "^6.4.0"
   },
   "engines": {
-    "npm": "6.5.0",
-    "node": "8.11.1"
+    "npm": "6.4.1",
+    "node": "10.15.3"
   },
   "browserslist": [
     ">0.2%",
