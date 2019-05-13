@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Push from 'push.js'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Navbar from './Components/Navbar'
 import Gallery from './Components/Gallery'
@@ -20,7 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [{ id: "bobblehead", text: "bobblehead" }],
+      tags: [],
       tagResults: [],
       mixedResults: [],
       items: [],
@@ -41,17 +40,21 @@ class App extends Component {
   componentDidMount() {
     let tags = JSON.parse(localStorage.getItem('tags'))
 
-    if (typeof tags !== null && tags.length > 0) {
+    if (tags.length > 0) {
       setTimeout(this.lazyLoad, 3000)
-      this.setState({ tags },
-        this.fetchAndStore
-      )
     }
+
+    this.setState({ tags },
+      this.fetchAndStore
+    )
 
     setInterval(this.fetchSave, 3600000)
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.state.items)
+    console.log(this.state.tagResults)
+    console.log(this.state.itemCount)
     let prevMixedResults = prevState.mixedResults.length
     let mixedResults = this.state.mixedResults.length
 
@@ -81,7 +84,7 @@ class App extends Component {
   deleteSave = () => {
     this.saveToLocal()
     this.fetchAndStore()
-    setTimeout(this.lazyLoad, 2000)
+    setTimeout(this.lazyLoad, 5000)
     console.log('deletesave')
   }
 
@@ -150,9 +153,12 @@ class App extends Component {
       {
         tags: tags.filter((tag, index) => index !== i),
         items: [],
-        itemCount: 0
+        tagResults: [],
+        itemCount: 0,
+        mixedResults: []
       },
       () => {
+        console.log(this.state.itemCount)
         console.log(this.state.tags)
         this.deleteSave()
       }
@@ -161,7 +167,10 @@ class App extends Component {
 
   handleAddition(tag) {
     if (this.state.tags.length < 3) {
-      this.setState({ tags: [...this.state.tags, tag] },
+      this.setState({
+        tags: [...this.state.tags, tag],
+        itemCount: 0
+      },
         () => {
           this.fetchSave()
         }
@@ -183,29 +192,21 @@ class App extends Component {
   render() {
     const { tags, tagResults, items } = this.state
     return (
-      <Router>
-        <div className="App">
-          <Route
-            path='/' exact
-            render={(props) => (<Navbar {...props}
-              tags={tags}
-              handleDelete={this.handleDelete}
-              handleAddition={this.handleAddition}
-              handleDrag={this.handleDrag}
-              delimiters={delimiters}
-            />)}
-          />
-          <Route
-            path='/' exact
-            render={(props) => (<Gallery {...props}
-              tags={tags}
-              lazyLoad={this.lazyLoad}
-              tagResults={tagResults}
-              items={items}
-            />)}
-          />
-        </div>
-      </Router>
+      <div className="App">
+        <Navbar
+          tags={tags}
+          handleDelete={this.handleDelete}
+          handleAddition={this.handleAddition}
+          handleDrag={this.handleDrag}
+          delimiters={delimiters}
+        />
+        <Gallery
+          tags={tags}
+          lazyLoad={this.lazyLoad}
+          tagResults={tagResults}
+          items={items}
+        />
+      </div>
     );
   }
 }
