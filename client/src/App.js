@@ -40,9 +40,7 @@ class App extends Component {
   componentDidMount() {
     let tags = JSON.parse(localStorage.getItem('tags'))
 
-    if (tags.length > 0) {
-      setTimeout(this.lazyLoad, 3000)
-    }
+    setTimeout(this.lazyLoad, 3000)
 
     this.setState({ tags },
       this.fetchAndStore
@@ -52,9 +50,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.items)
-    console.log(this.state.tagResults)
-    console.log(this.state.itemCount)
     let prevMixedResults = prevState.mixedResults.length
     let mixedResults = this.state.mixedResults.length
 
@@ -71,8 +66,6 @@ class App extends Component {
     } else { return }
 
     window.scrollTo(0, 0)
-
-    console.log(this.state.tags)
   }
 
   fetchSave = () => {
@@ -85,11 +78,9 @@ class App extends Component {
     this.saveToLocal()
     this.fetchAndStore()
     setTimeout(this.lazyLoad, 5000)
-    console.log('deletesave')
   }
 
   lazyLoad() {
-    console.log('lazyload')
     const { mixedResults } = this.state
     if (mixedResults.length > 0) {
       const items = mixedResults.slice(0, this.state.itemCount + 12)
@@ -123,7 +114,6 @@ class App extends Component {
   }
 
   fetchAndStore() {
-    console.log('fetchandstore')
     const { tags } = this.state
     if (tags.length > 0) {
       let tagString = []
@@ -158,8 +148,6 @@ class App extends Component {
         mixedResults: []
       },
       () => {
-        console.log(this.state.itemCount)
-        console.log(this.state.tags)
         this.deleteSave()
       }
     )

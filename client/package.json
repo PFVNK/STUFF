@@ -2,25 +2,16 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://get-stuff.herokuapp.com/",
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
   "dependencies": {
-    "express": "^4.16.4",
     "push.js": "^1.0.9",
-    "react": "^16.8.4",
+    "react": "^16.8.6",
     "react-bottom-scroll-listener": "^2.1.2",
-    "react-burger-menu": "^2.6.5",
-    "react-dnd": "^5.0.0",
-    "react-dnd-html5-backend": "^3.0.2",
-    "react-dom": "^16.8.4",
+    "react-burger-menu": "^2.6.10",
+    "react-dnd": "^7.4.5",
+    "react-dnd-html5-backend": "^7.4.4",
+    "react-dom": "^16.8.6",
     "react-loader-spinner": "^2.3.0",
-    "react-responsive": "^6.1.1",
-    "react-router-dom": "^5.0.0",
+    "react-responsive": "^6.1.2",
     "react-scripts": "^3.0.0",
     "react-stack-grid": "^0.7.1",
     "react-tag-input": "^6.4.0"
@@ -28,6 +19,12 @@
   "engines": {
     "npm": "6.4.1",
     "node": "10.15.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "browserslist": [
     ">0.2%",
